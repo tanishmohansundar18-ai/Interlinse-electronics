@@ -37,6 +37,7 @@
     nav {
       display: flex;
       gap: 15px;
+      flex-wrap: wrap;
     }
     nav button {
       background: transparent;
@@ -64,18 +65,20 @@
       flex-direction: column;
       justify-content: center;
       border-bottom: 1px solid #004080;
+      scroll-margin-top: 80px;
     }
     section h2 {
       font-size: 2.8rem;
-      margin-bottom: 15px;
+      margin-bottom: 25px;
       border-bottom: 3px solid #5f00dd;
       display: inline-block;
       padding-bottom: 5px;
     }
     section p {
       font-size: 1.2rem;
-      max-width: 700px;
-      line-height: 1.6;
+      max-width: 900px;
+      line-height: 1.8;
+      margin-bottom: 20px;
     }
     .button-primary {
       margin-top: 20px;
@@ -92,6 +95,69 @@
     .button-primary:hover {
       background-color: #3a0080;
     }
+    /* PRODUCT CARDS STYLES */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill,minmax(280px,1fr));
+      gap: 25px;
+      width: 100%;
+      max-width: 1100px;
+    }
+    .product-card {
+      background: #003973;
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+      transition: transform 0.3s;
+    }
+    .product-card:hover {
+      transform: translateY(-8px);
+    }
+    .product-image img {
+      width: 100%;
+      height: 200px;
+      object-fit: contain;
+      background: #001f4d;
+    }
+    .product-info {
+      padding: 15px 20px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .product-name {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .product-price {
+      font-size: 1.1rem;
+      color: #dcdcdc;
+      margin-bottom: 15px;
+    }
+    .product-price del {
+      margin-left: 8px;
+      color: #777;
+      font-weight: normal;
+      font-size: 0.9rem;
+    }
+    .details-btn {
+      background-color: #5f00dd;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 25px;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      align-self: flex-start;
+    }
+    .details-btn:hover {
+      background-color: #3a0080;
+    }
     footer {
       text-align: center;
       padding: 15px;
@@ -102,15 +168,58 @@
     /* Responsive */
     @media (max-width: 768px) {
       nav {
-        flex-wrap: wrap;
         justify-content: center;
-      }
-      nav button {
-        margin-bottom: 5px;
       }
       section {
         padding: 30px 20px;
       }
+    }
+
+    /* Modal styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 2000;
+      left: 0;
+      top: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.7);
+      backdrop-filter: blur(4px);
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal-content {
+      background-color: #002960;
+      padding: 25px 30px;
+      border-radius: 12px;
+      width: 90%;
+      max-width: 600px;
+      color: white;
+      box-shadow: 0 0 30px #5f00dd;
+      position: relative;
+    }
+    .modal-close {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      background: transparent;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+    .modal-content h3 {
+      margin-bottom: 10px;
+      border-bottom: 2px solid #5f00dd;
+      padding-bottom: 5px;
+    }
+    .modal-content p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      margin-top: 15px;
     }
   </style>
 </head>
@@ -133,58 +242,167 @@
   <main>
     <section id="home" tabindex="-1">
       <h2>Welcome to Interlinse</h2>
-      <p>Your trusted partner in cutting-edge electronics innovation. Explore our latest products designed to elevate your digital experience.</p>
-      <button class="button-primary" onclick="alert('Explore products coming soon!')">Explore Products</button>
+      <p>Interlinse is a pioneering technology company focused on delivering advanced electronics that blend innovation, quality, and design. Our commitment to excellence ensures that every product we create matches the highest standards, suitable for the modern lifestyle.</p>
+      <p>Explore our site to discover powerful smartphones, smart home hubs, premium accessories, and more, all crafted with passion and precision to enhance your day-to-day life.</p>
+      <button class="button-primary" onclick="scrollToSection('products')">Explore Our Products</button>
     </section>
     <section id="products" tabindex="-1">
       <h2>Our Products</h2>
-      <p>Discover a wide range of devices, from smartphones to smart home solutions, engineered with precision and style.</p>
-      <button class="button-primary" onclick="alert('Products details will be live soon!')">View Catalog</button>
+      <p>Interlinse offers a comprehensive lineup of cutting-edge electronics tailored to meet your needs — from mobile communication devices to smart home automation solutions. Each product delivers seamless performance combined with elegant aesthetics.</p>
+      <div class="products-grid">
+        <div class="product-card">
+          <div class="product-image">
+            <img src="https://via.placeholder.com/300x200?text=Smartphone+Z1" alt="Smartphone Z1" />
+          </div>
+          <div class="product-info">
+            <div class="product-name">Smartphone Z1</div>
+            <div class="product-price">$799 <del>$899</del></div>
+            <button class="details-btn" data-product="z1">Details</button>
+          </div>
+        </div>
+        <div class="product-card">
+          <div class="product-image">
+            <img src="https://via.placeholder.com/300x200?text=Laptop+Z2" alt="Laptop Z2" />
+          </div>
+          <div class="product-info">
+            <div class="product-name">Laptop Z2</div>
+            <div class="product-price">$1299 <del>$1499</del></div>
+            <button class="details-btn" data-product="z2">Details</button>
+          </div>
+        </div>
+        <div class="product-card">
+          <div class="product-image">
+            <img src="https://via.placeholder.com/300x200?text=Smart+Watch+Z3" alt="Smart Watch Z3" />
+          </div>
+          <div class="product-info">
+            <div class="product-name">Smart Watch Z3</div>
+            <div class="product-price">$399 <del>$449</del></div>
+            <button class="details-btn" data-product="z3">Details</button>
+          </div>
+        </div>
+        <div class="product-card">
+          <div class="product-image">
+            <img src="https://via.placeholder.com/300x200?text=Wireless+Headphones+Z4" alt="Wireless Headphones Z4" />
+          </div>
+          <div class="product-info">
+            <div class="product-name">Wireless Headphones Z4</div>
+            <div class="product-price">$199 <del>$249</del></div>
+            <button class="details-btn" data-product="z4">Details</button>
+          </div>
+        </div>
+        <div class="product-card">
+          <div class="product-image">
+            <img src="https://via.placeholder.com/300x200?text=Smart+Home+Hub+Z5" alt="Smart Home Hub Z5" />
+          </div>
+          <div class="product-info">
+            <div class="product-name">Smart Home Hub Z5</div>
+            <div class="product-price">$349 <del>$399</del></div>
+            <button class="details-btn" data-product="z5">Details</button>
+          </div>
+        </div>
+      </div>
     </section>
     <section id="features" tabindex="-1">
       <h2>Features</h2>
-      <p>Experience unmatched performance, state-of-the-art technology, and sleek aesthetics in every product.</p>
-      <button class="button-primary" onclick="alert('Feature details will be available shortly!')">Learn More</button>
+      <p>Interlinse products are equipped with industry-leading features crafted to simplify and enrich your lifestyle. Experience ultra-fast processors, long-lasting battery life, vivid displays, AI-powered assistants, and seamless connectivity across devices. Each gadget is designed for intuitive user experiences and practical efficiency.</p>
+      <p>Our smart home solutions provide automation and security while remaining easy to set up and control remotely through your devices. Innovation and usability go hand-in-hand at Interlinse.</p>
+      <button class="button-primary" onclick="alert('Explore detailed specifications and advanced tech highlights on our upcoming product pages!')">Discover More Features</button>
     </section>
     <section id="gallery" tabindex="-1">
       <h2>Gallery</h2>
-      <p>Explore stunning visuals and in-depth looks at our latest models and concepts.</p>
-      <button class="button-primary" onclick="alert('Gallery coming soon!')">View Gallery</button>
+      <p>Browse our curated gallery showcasing the beauty and craftsmanship of Interlinse devices. From sleek unboxings to lifestyle shots, experience the detail and elegance built into every product.</p>
+      <p>The gallery highlights customer stories, product events, and behind-the-scenes looks at our design process, providing a window into the world of Interlinse.</p>
+      <button class="button-primary" onclick="alert('Gallery is getting updated with more visuals soon!')">View Gallery</button>
     </section>
     <section id="about" tabindex="-1">
       <h2>About Us</h2>
-      <p>Interlinse is committed to pushing the boundaries of innovation, blending technology with art for a better tomorrow.</p>
-      <button class="button-primary" onclick="alert('More about us coming!')">Read More</button>
+      <p>Established in 2020, Interlinse has continuously pushed the boundaries of consumer electronics. Our mission is to blend technology with creativity, producing products that transform everyday experiences. We invest heavily in R&D and sustainability, ensuring that our innovations serve not only the present but also the future.</p>
+      <p>Backed by a team of passionate engineers and designers, Interlinse stands as a symbol of quality, reliability, and customer-centric values in the electronics market.</p>
+      <button class="button-primary" onclick="alert('Learn more about our team and vision on our detailed About page!')">Learn More</button>
     </section>
     <section id="support" tabindex="-1">
       <h2>Support</h2>
-      <p>Need help? Our dedicated support team is here for you 24/7 to ensure you get the best experience.</p>
-      <button class="button-primary" onclick="alert('Support center coming soon!')">Get Support</button>
+      <p>At Interlinse, customer satisfaction is a priority. Our support team offers 24/7 assistance through multiple channels including live chat, phone, and email. Whether you need help with setup, troubleshooting, or warranty claims, our experts are here to guide you every step of the way.</p>
+      <p>Comprehensive manuals, FAQs, and video tutorials are also available for self-help on our website.</p>
+      <button class="button-primary" onclick="alert('Contact our support team or browse help articles for assistance!')">Get Support</button>
     </section>
     <section id="blog" tabindex="-1">
       <h2>Blog</h2>
-      <p>Stay updated with the latest news, tutorials, and innovations from the world of Interlinse.</p>
-      <button class="button-primary" onclick="alert('Blog posts will be live soon!')">Read Blog</button>
+      <p>Stay informed with the latest in technology trends, product launches, and company news from Interlinse. Our blog features expert articles, user guides, opinion pieces, and interviews with innovators in the tech industry.</p>
+      <p>We are committed to transparency and providing valuable content to our customers, partners, and tech enthusiasts worldwide.</p>
+      <button class="button-primary" onclick="alert('Check back soon for new insightful articles and updates!')">Read Blog</button>
     </section>
     <section id="careers" tabindex="-1">
       <h2>Careers</h2>
-      <p>Join Interlinse and help shape the future of electronics. We value creativity, passion, and innovation.</p>
-      <button class="button-primary" onclick="alert('Career opportunities will be posted soon!')">View Openings</button>
+      <p>Join Interlinse and become part of an exciting journey to revolutionize electronics. We value creativity, diversity, and ambition. Our collaborative work culture nurtures continuous learning and innovation.</p>
+      <p>We offer competitive benefits and opportunities for personal and professional growth in roles from engineering to marketing and beyond.</p>
+      <button class="button-primary" onclick="alert('Explore current job openings and internship programs!')">View Openings</button>
     </section>
     <section id="contact" tabindex="-1">
       <h2>Contact Us</h2>
-      <p>We'd love to hear from you! Reach out for inquiries, feedback, or partnerships.</p>
-      <button class="button-primary" onclick="alert('Contact form coming soon!')">Contact Now</button>
+      <p>We welcome your questions, feedback, and partnership inquiries. Reach out via our contact form, email, or over the phone. Our dedicated team will respond promptly to assist you.</p>
+      <p>Office locations, hours, and other contact details are listed below for your convenience.</p>
+      <ul>
+        <li>Email: support@interlinse.com</li>
+        <li>Phone: +1 (555) 123-4567</li>
+        <li>Address: 123 Tech Park, Silicon Valley, CA</li>
+      </ul>
+      <button class="button-primary" onclick="alert('Contact form coming soon!')">Send Inquiry</button>
     </section>
     <section id="privacy" tabindex="-1">
       <h2>Privacy Policy</h2>
-      <p>Your privacy is important to us. Learn how we protect your data and respect your rights.</p>
-      <button class="button-primary" onclick="alert('Privacy details coming soon!')">Read Policy</button>
+      <p>Your privacy is critical to us. Interlinse complies with all relevant data protection laws and ensures transparency in how we collect, use, and protect your personal information.</p>
+      <p>We do not sell or share your data with third parties without consent. Secure encryption and safeguards are implemented to keep your information safe.</p>
+      <p>For detailed information on our privacy practices and your rights, please refer to our full privacy statement available on our website.</p>
+      <button class="button-primary" onclick="alert('Read our full privacy policy on the official site!')">Read Policy</button>
     </section>
   </main>
   <footer>
     &copy; 2025 Interlinse Inc. All rights reserved.
   </footer>
+
+  <!-- Modals for product details -->
+  <div id="modal-z1" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-z1-title" tabindex="-1">
+    <div class="modal-content">
+      <button class="modal-close" aria-label="Close modal" onclick="closeModal('modal-z1')">&times;</button>
+      <h3 id="modal-z1-title">Smartphone Z1</h3>
+      <p>The Smartphone Z1 features a stunning 6.5-inch OLED display, 48MP dual cameras, and a powerful octa-core processor. Experience lightning-fast 5G connectivity and an all-day battery life designed for professionals and enthusiasts alike.</p>
+      <p>Additional features include facial recognition, wireless charging, and water resistance, making it a versatile and durable choice for modern users.</p>
+    </div>
+  </div>
+  <div id="modal-z2" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-z2-title" tabindex="-1">
+    <div class="modal-content">
+      <button class="modal-close" aria-label="Close modal" onclick="closeModal('modal-z2')">&times;</button>
+      <h3 id="modal-z2-title">Laptop Z2</h3>
+      <p>The Laptop Z2 boasts a 16-inch Retina display, next-gen SSD storage, and extended battery life for all your productivity needs. Powered by the latest generation processors, it is ideal for creatives, developers, and business users seeking performance and portability.</p>
+      <p>Enjoy a sleek aluminum chassis, advanced cooling system, and comprehensive connectivity options including Thunderbolt 4 ports.</p>
+    </div>
+  </div>
+  <div id="modal-z3" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-z3-title" tabindex="-1">
+    <div class="modal-content">
+      <button class="modal-close" aria-label="Close modal" onclick="closeModal('modal-z3')">&times;</button>
+      <h3 id="modal-z3-title">Smart Watch Z3</h3>
+      <p>Stay connected and monitor your health with the Smart Watch Z3. Featuring a vibrant AMOLED screen, advanced health tracking sensors, GPS, and up to 7 days of battery life, it is designed for fitness enthusiasts and tech-savvy users alike.</p>
+      <p>Compatible with both Android and iOS platforms, the Smart Watch Z3 offers customizable watch faces and a range of fitness apps.</p>
+    </div>
+  </div>
+  <div id="modal-z4" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-z4-title" tabindex="-1">
+    <div class="modal-content">
+      <button class="modal-close" aria-label="Close modal" onclick="closeModal('modal-z4')">&times;</button>
+      <h3 id="modal-z4-title">Wireless Headphones Z4</h3>
+      <p>The Wireless Headphones Z4 deliver crystal-clear audio with active noise cancellation and a comfortable ergonomic design. Enjoy up to 30 hours of playback on a single charge, and seamless Bluetooth connectivity for both work and leisure.</p>
+      <p>Additional features include touch controls, quick charging, and voice assistant integration.</p>
+    </div>
+  </div>
+  <div id="modal-z5" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-z5-title" tabindex="-1">
+    <div class="modal-content">
+      <button class="modal-close" aria-label="Close modal" onclick="closeModal('modal-z5')">&times;</button>
+      <h3 id="modal-z5-title">Smart Home Hub Z5</h3>
+      <p>The Smart Home Hub Z5 integrates all your smart devices into a single, easy-to-control platform. Featuring voice control compatibility, customizable automation, and robust security features, it is the cornerstone of your connected living space.</p>
+      <p>Control lighting, climate, security cameras, and more with intuitive apps and voice assistants.</p>
+    </div>
+  </div>
+
   <script>
     function scrollToSection(id) {
       const section = document.getElementById(id);
@@ -193,6 +411,68 @@
         section.scrollIntoView({ behavior: 'smooth' });
       }
     }
+
+    // Modal functionality
+    const productButtons = document.querySelectorAll('.details-btn');
+    productButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const product = button.getAttribute('data-product');
+        if (product) {
+          const modalId = 'modal-' + product;
+          openModal(modalId);
+        }
+      });
+    });
+
+    function openModal(id) {
+      const modal = document.getElementById(id);
+      if (modal) {
+        modal.style.display = 'flex';
+        modal.focus();
+        // Trap focus inside modal
+        trapFocus(modal);
+      }
+    }
+    function closeModal(id) {
+      const modal = document.getElementById(id);
+      if (modal) {
+        modal.style.display = 'none';
+      }
+    }
+
+    // Accessibility: Trap focus inside modal while open
+    function trapFocus(element) {
+      const focusableElements = element.querySelectorAll('a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])');
+      const firstFocusable = focusableElements[0];
+      const lastFocusable = focusableElements[focusableElements.length - 1];
+      element.addEventListener('keydown', function(e) {
+        if (e.key === 'Tab') {
+          if (e.shiftKey) {
+            if (document.activeElement === firstFocusable) {
+              e.preventDefault();
+              lastFocusable.focus();
+            }
+          } else {
+            if (document.activeElement === lastFocusable) {
+              e.preventDefault();
+              firstFocusable.focus();
+            }
+          }
+        }
+        if (e.key === 'Escape') {
+          element.style.display = 'none';
+        }
+      });
+    }
+
+    // Close modal on clicking outside content
+    document.querySelectorAll('.modal').forEach(modal => {
+      modal.addEventListener('click', (event) => {
+        if (event.target === modal) {
+          modal.style.display = 'none';
+        }
+      });
+    });
   </script>
 </body>
 </html>
