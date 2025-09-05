@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interlinse Electronics</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: sans-serif;
+    }
+    header {
+      background: #f8f8f8;
+      padding: 20px;
+      text-align: center;
+    }
+    header h1 {
+      font-weight: 600;
+      letter-spacing: 4px;
+    }
+    nav a {
+      margin: 0 15px;
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+    }
+    body {
+      background: #e3e3e3;
+    }
+    .container {
+      width: 100%;
+      min-height: 100vh;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .product-wrapper {
+      width: calc(25% - 20px);
+      background: white;
+      overflow: hidden;
+      border-radius: 10px;
+      transform: scale(0.95);
+    }
+    .product {
+      width: 100%;
+      background: #f6f6f6;
+    }
+    .product .img img {
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+      transition: all 0.5s;
+    }
+    .product .info {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .details {
+      padding: 20px;
+    }
+    .buy-btn button {
+      cursor: pointer;
+      padding: 10px 20px;
+      border: 1px solid #3d0686;
+      background: #5f00dd;
+      color: #fff;
+      border-radius: 25px;
+    }
+    footer {
+      background: #f8f8f8;
+      text-align: center;
+      padding: 15px;
+      margin-top: 20px;
+      font-size: 0.95em;
+      color: #444;
+    }
+    @media screen and (max-width: 1200px) {
+      .product-wrapper { width: calc(33.33% - 20px); }
+    }
+    @media screen and (max-width: 950px) {
+      .product-wrapper { width: calc(50% - 20px); }
+    }
+    @media screen and (max-width: 600px) {
+      .product-wrapper { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Interlinse</h1>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#">Products</a>
+      <a href="#">Support</a>
+      <a href="#">Contact</a>
+    </nav>
+  </header>
+  <div class="container">
+    <div class="product-wrapper">
+      <div class="product">
+        <div class="img">
+          <img src="https://media.geeksforgeeks.org/img-practice/prod/courses/261/Web/Content/dsa-web_1705410455.webp" alt="Smartphone X1">
+        </div>
+        <div class="info">
+          <div class="details">
+            <h1>Smartphone X1</h1>
+            <p>$799 <del>$899</del></p>
+          </div>
+          <div class="buy-btn"><button>DETAILS</button></div>
+        </div>
+      </div>
+    </div>
+    <div class="product-wrapper">
+      <div class="product">
+        <div class="img">
+          <img src="https://via.placeholder.com/300x200?text=Laptop+X2" alt="Laptop X2">
+        </div>
+        <div class="info">
+          <div class="details">
+            <h1>Laptop X2</h1>
+            <p>$1299 <del>$1499</del></p>
+          </div>
+          <div class="buy-btn"><button>DETAILS</button></div>
+        </div>
+      </div>
+    </div>
+    <!-- Add more .product-wrapper for more products -->
+  </div>
+  <footer>
+    <p>&copy; 2025 Interlinse Inc. All rights reserved.</p>
+  </footer>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const images = document.querySelectorAll("img");
+      images.forEach(image => {
+        image.addEventListener("mouseenter", function () {
+          this.style.transform = "scale(1.1) translateY(-15px)";
+          this.style.boxShadow = "5px 20px 30px rgba(0, 0, 0, 0.2)";
+        });
+        image.addEventListener("mouseleave", function () {
+          this.style.transform = "scale(1) translateY(0)";
+          this.style.boxShadow = "none";
+        });
+      });
+    });
+  </script>
+</body>
+</html>
