@@ -8,295 +8,174 @@
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-      color: white;
-      height: 100vh;
-      overflow-x: hidden;
+      background: #f4f4f4;
+      color: #333;
     }
-    /* Splash Screen */
-    #splash {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
+    .screen {
+      display: none;
+      padding: 50px;
       text-align: center;
     }
-    #splash h1 {
-      font-size: 4em;
-      margin-bottom: 20px;
-      color: #00d9ff;
+    .active {
+      display: block;
     }
-    #splash button {
-      padding: 12px 30px;
-      font-size: 18px;
-      font-weight: bold;
+    h1 {
+      color: #2a5298;
+    }
+    button {
+      background: #2a5298;
+      color: white;
       border: none;
+      padding: 12px 25px;
+      margin: 15px;
+      font-size: 1.1em;
       border-radius: 8px;
-      background: #00d9ff;
-      color: black;
       cursor: pointer;
       transition: 0.3s;
     }
-    #splash button:hover {
-      background: #00aacc;
+    button:hover { background: #1e3c72; }
+    .card {
+      background: white;
+      padding: 25px;
+      margin: 20px auto;
+      width: 280px;
+      border-radius: 10px;
+      box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
+      display: inline-block;
+      vertical-align: top;
+      cursor: pointer;
+      transition: 0.3s;
     }
-    /* Main Website */
-    #main {
-      display: none;
-      text-align: center;
+    .card:hover { background: #e3f2fd; transform: scale(1.05); }
+    .bill {
+      background: white;
       padding: 30px;
-    }
-    header h1 {
-      font-size: 2.5em;
-      color: #00d9ff;
-    }
-    nav {
-      margin: 20px 0;
-    }
-    nav button {
-      background: #111133;
-      border: none;
-      margin: 0 15px;
-      padding: 10px 20px;
-      border-radius: 6px;
-      font-size: 16px;
-      cursor: pointer;
-      font-weight: bold;
-      color: white;
-      transition: 0.3s;
-    }
-    nav button:hover {
-      background: #00d9ff;
-      color: black;
-    }
-    section {
-      display: none;
-      padding: 20px;
-    }
-    h2 {
-      color: #00d9ff;
-      margin-bottom: 20px;
-    }
-    .products {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
-    }
-    .product-card {
-      background: #1e1e40;
-      padding: 20px;
+      margin: auto;
+      width: 400px;
       border-radius: 12px;
-      width: 250px;
-      box-shadow: 0px 4px 10px rgba(0,0,0,0.4);
+      box-shadow: 0px 4px 15px rgba(0,0,0,0.3);
+      text-align: left;
     }
-    .product-card h3 {
-      color: #00ffae;
-    }
-    .price {
-      font-size: 18px;
-      font-weight: bold;
-      color: #00ffae;
-      margin: 10px 0;
-    }
-    .buy-btn {
-      background: #00d9ff;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: bold;
-      color: black;
-      transition: 0.3s;
-    }
-    .buy-btn:hover {
-      background: #00aacc;
-    }
-    #bill {
-      display: none;
-      text-align: center;
-      padding: 40px;
-      background: #111133;
-      border-radius: 12px;
-      box-shadow: 0px 4px 12px rgba(0,0,0,0.6);
-      margin: 40px auto;
-      max-width: 600px;
-    }
-    #qr {
-      margin: 20px 0;
-    }
-    .note {
-      font-size: 12px;
-      color: #aaa;
-      margin-top: 10px;
-    }
-    .back-btn {
-      margin-top: 20px;
-      background: #00d9ff;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: bold;
-      color: black;
+    .small {
+      font-size: 0.85em;
+      color: #555;
+      margin-top: 8px;
     }
   </style>
 </head>
 <body>
-  <!-- Splash Screen -->
-  <div id="splash">
+
+  <!-- Landing Screen -->
+  <div id="landing" class="screen active">
     <h1>Interlinse</h1>
-    <button onclick="enterSite()">Enter</button>
+    <p>"Shaping Tomorrow’s Electronics, Today."</p>
+    <button onclick="goTo('products')">Enter</button>
   </div>
 
-  <!-- Main Website -->
-  <div id="main">
-    <header>
-      <h1>Interlinse Products</h1>
-      <p>Choose your category</p>
-    </header>
+  <!-- Products Screen -->
+  <div id="products" class="screen">
+    <h1>Choose a Product Category</h1>
+    <button onclick="showModels('phones')">📱 Phones</button>
+    <button onclick="showModels('laptops')">💻 Laptops</button>
+    <button onclick="showModels('ipads')">📟 iPads</button>
+  </div>
 
-    <nav>
-      <button onclick="showScreen('phones')">Phones</button>
-      <button onclick="showScreen('laptops')">Laptops</button>
-      <button onclick="showScreen('ipads')">iPads</button>
-    </nav>
+  <!-- Models Screen -->
+  <div id="models" class="screen">
+    <h1>Select a Model</h1>
+    <div id="modelList"></div>
+    <button onclick="goTo('products')">⬅ Back</button>
+  </div>
 
-    <section id="phones">
-      <h2>Phones</h2>
-      <div class="products">
-        <div class="product-card">
-          <h3>Interlinse Phone A1</h3>
-          <p>6.1" OLED, 128GB Storage, Dual Camera</p>
-          <div class="price">₹20,999</div>
-          <button class="buy-btn" onclick="generateBill('Interlinse Phone A1', 20999)">Buy Now</button>
-        </div>
-        <div class="product-card">
-          <h3>Interlinse Phone Neo</h3>
-          <p>6.5" AMOLED, 256GB Storage, 5G</p>
-          <div class="price">₹28,499</div>
-          <button class="buy-btn" onclick="generateBill('Interlinse Phone Neo', 28499)">Buy Now</button>
-        </div>
-        <div class="product-card">
-          <h3>Interlinse Phone Pro Max</h3>
-          <p>6.7" Display, 512GB Storage, AI Camera</p>
-          <div class="price">₹37,999</div>
-          <button class="buy-btn" onclick="generateBill('Interlinse Phone Pro Max', 37999)">Buy Now</button>
-        </div>
-        <div class="product-card">
-          <h3>Interlinse Phone Ultra</h3>
-          <p>7.1" Foldable, 512GB Storage, 12GB RAM</p>
-          <div class="price">₹44,499</div>
-          <button class="buy-btn" onclick="generateBill('Interlinse Phone Ultra', 44499)">Buy Now</button>
-        </div>
-      </div>
-    </section>
-
-    <section id="laptops">
-      <h2>Laptops</h2>
-      <div class="products">
-        <div class="product-card">
-          <h3>InterlinseBook Air</h3>
-          <p>13" Slim Design, 8GB RAM, 512GB SSD</p>
-          <div class="price">₹34,999</div>
-          <button class="buy-btn" onclick="generateBill('InterlinseBook Air', 34999)">Buy Now</button>
-        </div>
-        <div class="product-card">
-          <h3>InterlinseBook Pro</h3>
-          <p>15" Ultra Display, 16GB RAM, 1TB SSD</p>
-          <div class="price">₹42,499</div>
-          <button class="buy-btn" onclick="generateBill('InterlinseBook Pro', 42499)">Buy Now</button>
-        </div>
-        <div class="product-card">
-          <h3>Interlinse Flex</h3>
-          <p>14" 2-in-1 Convertible, 8GB RAM</p>
-          <div class="price">₹29,999</div>
-          <button class="buy-btn" onclick="generateBill('Interlinse Flex', 29999)">Buy Now</button>
-        </div>
-        <div class="product-card">
-          <h3>Interlinse Note</h3>
-          <p>15.6" Notebook, 12GB RAM, 512GB SSD</p>
-          <div class="price">₹39,999</div>
-          <button class="buy-btn" onclick="generateBill('Interlinse Note', 39999)">Buy Now</button>
-        </div>
-      </div>
-    </section>
-
-    <section id="ipads">
-      <h2>iPads</h2>
-      <div class="products">
-        <div class="product-card">
-          <h3>Interlinse Tab Mini</h3>
-          <p>8.3" Compact Design, 128GB Storage</p>
-          <div class="price">₹22,499</div>
-          <button class="buy-btn" onclick="generateBill('Interlinse Tab Mini', 22499)">Buy Now</button>
-        </div>
-        <div class="product-card">
-          <h3>Interlinse Tab X</h3>
-          <p>11" Liquid Retina Display, Stylus</p>
-          <div class="price">₹31,999</div>
-          <button class="buy-btn" onclick="generateBill('Interlinse Tab X', 31999)">Buy Now</button>
-        </div>
-        <div class="product-card">
-          <h3>Interlinse Tab Pro</h3>
-          <p>12.9" Display, 256GB Storage</p>
-          <div class="price">₹38,999</div>
-          <button class="buy-btn" onclick="generateBill('Interlinse Tab Pro', 38999)">Buy Now</button>
-        </div>
-        <div class="product-card">
-          <h3>Interlinse Tab Max</h3>
-          <p>14" Display, 512GB Storage, Pro Stylus</p>
-          <div class="price">₹44,999</div>
-          <button class="buy-btn" onclick="generateBill('Interlinse Tab Max', 44999)">Buy Now</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- Bill Screen -->
-    <div id="bill">
-      <h2>Purchase Bill</h2>
-      <p id="bill-details"></p>
-      <canvas id="qr"></canvas>
-      <p><strong>Show this at the store to receive your product.</strong></p>
-      <p class="note">It will take minimum two days from the day when you show the bill at the store to deliver your products.</p>
-      <button class="back-btn" onclick="backToProducts()">Back to Products</button>
+  <!-- Details Screen -->
+  <div id="details" class="screen">
+    <div class="card" style="cursor: default;">
+      <h2 id="detailName"></h2>
+      <p id="detailPrice"></p>
+      <p id="detailDesc"></p>
+      <button onclick="goToBill()">Buy Now</button>
     </div>
+    <button onclick="goTo('models')">⬅ Back</button>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+  <!-- Bill Screen -->
+  <div id="bill" class="screen">
+    <h1>Purchase Bill</h1>
+    <div class="bill">
+      <p><b>Customer:</b> Walk-in User</p>
+      <p><b>Product:</b> <span id="billName"></span></p>
+      <p><b>Price:</b> ₹<span id="billPrice"></span></p>
+      <p><b>Date:</b> <span id="billDate"></span></p>
+      <p><b>Order ID:</b> <span id="billOrder"></span></p>
+      <p><b>QR Code:</b> [####]</p>
+      <p><b>Note:</b> Show this at the store to receive your product.</p>
+      <p class="small">It will take minimum two days from the day you show the bill to the store to deliver your products.</p>
+    </div>
+    <button onclick="goTo('products')">Shop More</button>
+  </div>
+
   <script>
-    function enterSite() {
-      document.getElementById('splash').style.display = 'none';
-      document.getElementById('main').style.display = 'block';
-      showScreen('phones'); // default
+    // Data
+    const products = {
+      phones: [
+        {name: "Interlinse X1", price: 25000, desc: "The X1 blends performance with sleek design. Powered by a lightning-fast processor, immersive display, and all-day battery. Perfect for work and play."},
+        {name: "Interlinse X2", price: 30000, desc: "X2 is crafted for speed and elegance. Featuring enhanced cameras, fluid graphics, and seamless multitasking. A true powerhouse in your pocket."},
+        {name: "Interlinse Ultra", price: 40000, desc: "Ultra redefines premium smartphones with cutting-edge AI features, superior build, and next-gen audio experience. Built for the future."},
+        {name: "Interlinse Max", price: 45000, desc: "Max delivers big on every front—expansive screen, unmatched power, and battery that lasts beyond the day. The ultimate companion device."}
+      ],
+      laptops: [
+        {name: "Interlinse Book Air", price: 35000, desc: "Lightweight yet powerful, Book Air is perfect for students and professionals. Slim design, strong battery, and excellent portability."},
+        {name: "Interlinse Pro 13", price: 42000, desc: "Compact yet mighty, Pro 13 offers high performance for creative minds. Crisp visuals and powerful processors included."},
+        {name: "Interlinse Pro 15", price: 44000, desc: "The Pro 15 is built for creators and gamers. Larger display, enhanced speed, and flawless productivity support."},
+        {name: "Interlinse Gaming Z", price: 45000, desc: "Gaming Z is engineered for hardcore gamers. Powerful GPU, cooling system, and immersive sound for unmatched playtime."}
+      ],
+      ipads: [
+        {name: "Interlinse Pad Mini", price: 22000, desc: "Portable and versatile, Pad Mini packs power in a small frame. Ideal for on-the-go entertainment and reading."},
+        {name: "Interlinse Pad Air", price: 28000, desc: "Pad Air combines elegance with strength. Crystal-clear display, great performance, and lightweight design."},
+        {name: "Interlinse Pad Pro", price: 36000, desc: "Pad Pro is for professionals needing productivity. Sharp visuals, stylus support, and seamless multitasking."},
+        {name: "Interlinse Pad Max", price: 42000, desc: "Pad Max delivers ultimate entertainment and productivity with a large display, strong processor, and full-day battery life."}
+      ]
+    };
+
+    let selectedProduct = null;
+
+    // Navigation
+    function goTo(screen) {
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      document.getElementById(screen).classList.add('active');
     }
 
-    function showScreen(id) {
-      document.querySelectorAll('section').forEach(sec => sec.style.display = 'none');
-      document.getElementById('bill').style.display = 'none';
-      document.getElementById(id).style.display = 'block';
-    }
-
-    function generateBill(product, price) {
-      document.querySelectorAll('section').forEach(sec => sec.style.display = 'none');
-      document.getElementById('bill').style.display = 'block';
-
-      const date = new Date().toLocaleDateString();
-      const orderId = Math.floor(Math.random() * 1000000);
-
-      const billDetails = `Order ID: ${orderId}\nDate: ${date}\nProduct: ${product}\nPrice: ₹${price}`;
-      document.getElementById('bill-details').innerText = billDetails;
-
-      const qrCanvas = document.getElementById('qr');
-      QRCode.toCanvas(qrCanvas, billDetails, function (error) {
-        if (error) console.error(error);
+    function showModels(category) {
+      goTo('models');
+      const container = document.getElementById('modelList');
+      container.innerHTML = "";
+      products[category].forEach(p => {
+        const div = document.createElement('div');
+        div.className = "card";
+        div.innerHTML = `<h3>${p.name}</h3><p>₹${p.price}</p>`;
+        div.onclick = () => showDetails(p);
+        container.appendChild(div);
       });
     }
 
-    function backToProducts() {
-      showScreen('phones'); // goes back to default products
+    function showDetails(product) {
+      selectedProduct = product;
+      document.getElementById("detailName").innerText = product.name;
+      document.getElementById("detailPrice").innerText = "Price: ₹" + product.price;
+      document.getElementById("detailDesc").innerText = product.desc;
+      goTo('details');
+    }
+
+    function goToBill() {
+      const today = new Date().toLocaleDateString();
+      const orderId = Math.floor(Math.random() * 1000000);
+      document.getElementById("billName").innerText = selectedProduct.name;
+      document.getElementById("billPrice").innerText = selectedProduct.price;
+      document.getElementById("billDate").innerText = today;
+      document.getElementById("billOrder").innerText = orderId;
+      goTo('bill');
     }
   </script>
+
 </body>
 </html>
